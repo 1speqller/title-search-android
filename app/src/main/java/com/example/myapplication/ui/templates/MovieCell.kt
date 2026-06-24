@@ -1,10 +1,15 @@
 package com.example.myapplication.ui.templates
 
+import androidx.compose.foundation.Indication
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,6 +21,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -28,14 +34,21 @@ import coil.compose.AsyncImage
 
 @Composable
 fun MovieCell(
+    modifier: Modifier = Modifier,
     title: String?,
     genres: List<String>?,
-    photoPath: String?
+    photoPath: String?,
+    onClick: () -> Unit
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(4.dp)
-            .fillMaxSize(),
+            .fillMaxSize()
+            .clickable(
+                enabled = true,
+                interactionSource = remember { MutableInteractionSource() },
+                onClick = onClick
+            ),
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
@@ -48,13 +61,16 @@ fun MovieCell(
         ) {
             AsyncImage(
                 modifier = Modifier
+                    .padding(end = 8.dp)
                     .border(
                         width = 1.dp,
                         color = Color.Gray,
                         shape = RoundedCornerShape(12.dp)
                     )
+
                     .clip(RoundedCornerShape(12.dp))
-                    .size(164.dp),
+                    .fillMaxWidth()
+                    .aspectRatio(1f),
                 alignment = Alignment.Center,
                 model = photoPath,
                 contentDescription = null,

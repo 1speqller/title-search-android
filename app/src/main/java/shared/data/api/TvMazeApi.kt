@@ -1,13 +1,19 @@
 package shared.data.api
 
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
-import shared.data.api.model.Show
-import shared.data.api.model.ShowResponse
+import shared.data.api.model.DetailMovieResponseModel
+import shared.data.api.model.MovieResponse
 
 interface TvMazeApi {
     @GET("search/shows")
-    suspend fun searchShows(
+    suspend fun searchMovies(
         @Query("q") query: String
-    ): List<ShowResponse>
+    ): List<MovieResponse>
+
+    @GET("shows/{id}")
+    suspend fun searchDetailMovie(
+        @Path("id") id: Int
+    ) : DetailMovieResponseModel
 }

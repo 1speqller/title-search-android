@@ -1,9 +1,8 @@
 package shared.presentation.viewmodel
 
-import androidx.compose.runtime.collectAsState
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,14 +11,10 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.launch
-import retrofit2.http.Query
-import shared.data.api.model.Show
-import shared.data.api.model.ShowResponse
-import shared.domain.interactor.SearchShowInteractor
-import shared.domain.model.ShowModel
+import shared.domain.interactor.MovieInteractor
 
-class TvMazeViewModel(
-    private val interactor: SearchShowInteractor
+class MainScreenViewModel(
+    private val interactor: MovieInteractor
 ): ViewModel() {
     private val _state = MutableStateFlow<MainScreenState>(MainScreenState.Start)
     val state: StateFlow<MainScreenState> = _state.asStateFlow()
@@ -33,15 +28,15 @@ class TvMazeViewModel(
                 .filter { (it?.length ?: 0) >= 3 }
                 .distinctUntilChanged()
                 .collectLatest { query ->
-                    searchShow(query ?: "")
+                    searchMovies(query ?: "")
                 }
         }
     }
-    private fun searchShow(query: String) {
+    private fun searchMovies(query: String) {
         viewModelScope.launch {
             _state.value = MainScreenState.Loading
             try {
-                _state.value = MainScreenState.Success(interactor.searchShows(query))
+                _state.value = MainScreenState.Success(interactor.searchMovies(query))
             } catch (e: Exception) {
                 _state.value = MainScreenState.Error(e.message ?: "Неизвестная ошибка")
             }

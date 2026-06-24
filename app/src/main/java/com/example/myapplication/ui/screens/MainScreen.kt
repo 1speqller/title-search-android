@@ -1,5 +1,6 @@
-package com.example.myapplication.ui.screen
+package com.example.myapplication.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,26 +14,28 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import shared.presentation.viewmodel.TvMazeViewModel
+import shared.presentation.viewmodel.MainScreenViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.templates.MovieCell
 import com.example.myapplication.ui.templates.MovieInputText
-import shared.domain.model.ShowModel
+import shared.domain.model.MovieModel
 import shared.presentation.viewmodel.MainScreenState
 
 @Composable
 fun MainScreen(
-    viewModel: TvMazeViewModel
+    viewModel: MainScreenViewModel,
+    onMovieClick: (Int) -> Unit
 ) {
     val state by viewModel.state.collectAsState()
     val query = viewModel.query.collectAsState()
 
     Screen(
         state = state,
+        query = query,
         onQueryChange = viewModel::onQueryChange,
-        query = query
+        onMovieClick = onMovieClick
     )
 }
 
@@ -40,7 +43,8 @@ fun MainScreen(
 fun Screen(
     state: MainScreenState,
     onQueryChange: (String) -> Unit,
-    query: State<String?>
+    query: State<String?>,
+    onMovieClick: (Int) -> Unit
 ) {
     Scaffold(
         modifier = Modifier
@@ -65,7 +69,7 @@ fun Screen(
                 )
             when(state) {
                 is MainScreenState.Error -> {
-                    // nothing
+                    Log.e("Error", state.message)
                 }
                 MainScreenState.Loading -> {
                     // nothing
@@ -73,7 +77,12 @@ fun Screen(
                 MainScreenState.Start -> {
                     // nothing
                 }
-                is MainScreenState.Success -> MovieGrid(state.shows)
+                is MainScreenState.Success -> {
+                    MovieGrid(
+                        state.shows,
+                        onMovieClick
+                    )
+                }
             }
 
         }
@@ -82,7 +91,8 @@ fun Screen(
 
 @Composable
 private fun MovieGrid(
-    movies: List<ShowModel>
+    movies: List<MovieModel>,
+    onClick: (Int) -> Unit
 ) {
     LazyVerticalGrid(
         modifier = Modifier
@@ -92,6 +102,9 @@ private fun MovieGrid(
     ) {
         items(movies) { movie ->
             MovieCell(
+                onClick = {
+                    onClick(movie.id)
+                },
                 title = movie.name,
                 genres = movie.genres,
                 photoPath = movie.image?.medium
