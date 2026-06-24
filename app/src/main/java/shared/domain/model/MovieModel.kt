@@ -1,6 +1,6 @@
 package shared.domain.model
 
-data class ShowModel (
+data class MovieModel (
     val id: Int,
     val name: String = "Без названия",
     val summary: String? = "Без описания",

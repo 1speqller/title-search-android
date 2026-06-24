@@ -1,12 +1,12 @@
 package shared.data.api.model
 
-data class ShowResponse(
-    val show: Show
+data class MovieResponse(
+    val show: Movie
 )
-data class Show (
+data class Movie (
     val id: Int,
     val name: String,
     val summary: String?,
-    val image: Image?,
+    val image: ImageModel?,
     val genres: List<String>
 )
