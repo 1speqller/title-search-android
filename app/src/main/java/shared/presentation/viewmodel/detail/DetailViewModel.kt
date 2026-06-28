@@ -2,15 +2,14 @@ package shared.presentation.viewmodel.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import shared.domain.interactor.MovieInteractor
+import shared.domain.interactor.MovieInteractorImpl
 
 class DetailViewModel(
-    private val interactor: MovieInteractor
+    private val interactor: MovieInteractorImpl
 ): ViewModel() {
     private val _state = MutableStateFlow<DetailScreenState>(DetailScreenState.Start)
     val state: StateFlow<DetailScreenState> = _state.asStateFlow()

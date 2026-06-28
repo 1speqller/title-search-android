@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
@@ -22,7 +23,9 @@ fun MovieText(
     modifier: Modifier = Modifier,
     text: String,
     color: Color = Color.Unspecified,
-    size: TextUnit = 14.sp
+    size: TextUnit = 14.sp,
+    maxLines: Int = Int.MAX_VALUE,
+    textOverflow: TextOverflow = TextOverflow.Visible
 ) {
     Text(
         modifier = modifier,
@@ -31,6 +34,8 @@ fun MovieText(
             color = color,
             fontWeight = FontWeight.Bold,
             fontSize = size
-        )
+        ),
+        maxLines = maxLines,
+        overflow = textOverflow
     )
 }

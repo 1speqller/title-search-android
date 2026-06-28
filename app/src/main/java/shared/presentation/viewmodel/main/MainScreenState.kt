@@ -1,4 +1,4 @@
-package shared.presentation.viewmodel
+package shared.presentation.viewmodel.main
 
 import shared.domain.model.MovieModel
 

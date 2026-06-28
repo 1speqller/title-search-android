@@ -3,15 +3,10 @@ package com.example.myapplication.ui.screens.DetailScreen
 import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,9 +25,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.myapplication.R
 import com.example.myapplication.ui.templates.MovieText
-import org.intellij.lang.annotations.JdkConstants
 import shared.domain.model.DetailMovieModel
-import shared.presentation.viewmodel.MainScreenState
 import shared.presentation.viewmodel.detail.DetailScreenState
 import shared.presentation.viewmodel.detail.DetailViewModel
 

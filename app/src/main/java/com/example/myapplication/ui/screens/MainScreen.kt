@@ -10,18 +10,24 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import shared.presentation.viewmodel.MainScreenViewModel
+import shared.presentation.viewmodel.main.MainScreenViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.templates.MovieCell
 import com.example.myapplication.ui.templates.MovieInputText
 import shared.domain.model.MovieModel
-import shared.presentation.viewmodel.MainScreenState
+import shared.presentation.viewmodel.main.MainScreenState
+import shared.presentation.viewmodel.main.MainUIEvent
 
 @Composable
 fun MainScreen(
@@ -30,6 +36,20 @@ fun MainScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val query = viewModel.query.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(Unit) {
+        viewModel.eventFlow.collect { event ->
+            when (event) {
+                is MainUIEvent.ShowError -> {
+                    snackbarHostState.showSnackbar(
+                        message = event.message,
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            }
+        }
+    }
 
     Screen(
         state = state,
