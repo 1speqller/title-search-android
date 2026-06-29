@@ -1,6 +1,7 @@
 package shared.data.repository
 
 import shared.data.api.model.Movie
+import shared.data.datasource.RemoteDataSource
 import shared.data.datasource.RemoteDataSourceImpl
 import shared.domain.model.DetailMovieModel
 import shared.domain.model.ImageModel
@@ -8,7 +9,7 @@ import shared.domain.model.MovieModel
 import shared.domain.repository.MovieRepository
 
 class MovieRepositoryImpl(
-    private val dataSource: RemoteDataSourceImpl
+    private val dataSource: RemoteDataSource
 ): MovieRepository {
 
     override suspend fun searchMovies(query: String): List<MovieModel> {
@@ -39,7 +40,10 @@ class MovieRepositoryImpl(
             status = response.status,
             startAt = response.premiered,
             endAt = response.ended,
-            image = response.image,
+            image = ImageModel(
+                medium = response.image.medium,
+                original = response.image.original
+            ),
             description = response.summary?.replace(Regex("<.*?>"), "")?.trim(),
             officialSite = response.officialSite
         )

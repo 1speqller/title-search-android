@@ -94,7 +94,7 @@ private fun Screen(
                     .clip(RoundedCornerShape(12.dp))
                     .align(alignment = Alignment.CenterHorizontally),
                 alignment = Alignment.Center,
-                model = movie.image.medium,
+                model = movie.image?.medium,
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )

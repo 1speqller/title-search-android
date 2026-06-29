@@ -60,6 +60,9 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.4.0")
     implementation("io.coil-kt:coil-compose:2.7.0")
 
+    // Tests
+    testImplementation("io.mockk:mockk:1.13.4")
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.material3)
