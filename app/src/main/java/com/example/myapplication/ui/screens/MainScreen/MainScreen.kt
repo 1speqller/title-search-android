@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.screens
+package com.example.myapplication.ui.screens.MainScreen
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -11,7 +11,6 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -36,13 +35,13 @@ fun MainScreen(
 ) {
     val state by viewModel.state.collectAsState()
     val query = viewModel.query.collectAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(Unit) {
         viewModel.eventFlow.collect { event ->
             when (event) {
                 is MainUIEvent.ShowError -> {
-                    snackbarHostState.showSnackbar(
+                    snackBarHostState.showSnackbar(
                         message = event.message,
                         duration = SnackbarDuration.Short
                     )

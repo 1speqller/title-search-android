@@ -4,7 +4,7 @@ package shared.domain.model
 data class DetailMovieModel (
     val id: Int,
     val name: String? = "Без названия",
-    val status: String? = "Незвестно",
+    val status: String,
     val startAt: String?,
     val endAt: String?,
     val image: ImageModel?,

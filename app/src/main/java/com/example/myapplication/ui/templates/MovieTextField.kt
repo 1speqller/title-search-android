@@ -43,7 +43,7 @@ fun MovieInputText(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
             .background(
-                color = Color.White,
+                color = Color.Unspecified,
                 shape = RoundedCornerShape(16.dp)
             )
             .border(
@@ -65,7 +65,8 @@ fun MovieInputText(
             )
         },
         textStyle = TextStyle(
-            fontSize = 16.sp
+            fontSize = 16.sp,
+            color = Color.LightGray
         ),
         maxLines = 1,
         placeholder = {

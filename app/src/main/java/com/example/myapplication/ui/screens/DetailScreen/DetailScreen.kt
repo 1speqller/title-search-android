@@ -1,12 +1,15 @@
 package com.example.myapplication.ui.screens.DetailScreen
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -16,7 +19,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -67,6 +72,7 @@ private fun Screen(
             .fillMaxSize(),
         topBar = {
             IconButton(
+                modifier = Modifier.padding(top = 8.dp),
                 onClick = onBackPressed
             ) {
                 Icon(
@@ -98,11 +104,61 @@ private fun Screen(
                 contentDescription = null,
                 contentScale = ContentScale.Crop
             )
-            MovieText(
-                modifier = Modifier.padding(top = 4.dp),
-                text = movie.name ?: "Без названия",
-                size = 16.sp
-            )
+            Row(
+                modifier = Modifier.padding(vertical = 8.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                MovieText(
+                    modifier = Modifier.padding(end = 8.dp),
+                    text = movie.name ?: "Без названия",
+                    size = 32.sp
+                )
+                Row(
+                    modifier = Modifier
+                        .background(
+                            color = Color.Unspecified,
+                            shape = RoundedCornerShape(24.dp)
+                        )
+                        .border(
+                            color = Color.LightGray,
+                            width = 1.dp,
+                            shape = RoundedCornerShape(24.dp)
+                        ),
+                ) {
+                    MovieText(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .padding(vertical = 4.dp, horizontal = 8.dp),
+                        text = movie.status,
+                        color = Color.Magenta
+                    )
+                }
+            }
+            movie.startAt?.let {
+                Column() {
+                    MovieText(
+                        text = "Start at: " + movie.startAt,
+                        color = Color.LightGray
+                    )
+                    movie.endAt?.let {
+                        MovieText(
+                            modifier = Modifier.padding(top = 4.dp),
+                            text = "End at: " + movie.endAt,
+                            color = Color.LightGray
+                        )
+                    }
+                }
+            }
+
+            movie.description?.let {
+                MovieText(
+                    modifier = Modifier
+                        .align(Alignment.Start)
+                        .padding(vertical = 8.dp),
+                    text = movie.description,
+                    color = Color.Gray
+                )
+            }
         }
     }
 }
