@@ -2,6 +2,7 @@ package com.example.myapplication.ui.screens.MainScreen
 
 import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -21,6 +23,7 @@ import shared.presentation.viewmodel.main.MainScreenViewModel
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.ui.templates.MovieCell
 import com.example.myapplication.ui.templates.MovieInputText
@@ -84,14 +87,19 @@ fun Screen(
                     onQueryChange(it)
                 },
                 placeholder = "Поиск",
-
                 )
             when(state) {
                 is MainScreenState.Error -> {
                     Log.e("Error", state.message)
+
                 }
                 MainScreenState.Loading -> {
-                    // nothing
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
                 }
                 MainScreenState.Start -> {
                     // nothing
@@ -103,7 +111,6 @@ fun Screen(
                     )
                 }
             }
-
         }
     }
 }

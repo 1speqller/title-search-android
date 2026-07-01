@@ -59,7 +59,7 @@ fun MovieCell(
     ) {
         Column(
             modifier = Modifier
-                .padding(start = 8.dp, bottom = 8.dp, top = 8.dp)
+                .padding(8.dp)
                 .fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.Start
